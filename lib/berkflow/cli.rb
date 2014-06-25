@@ -149,7 +149,7 @@ module Berkflow
       end
 
       say "Executing command on #{nodes.length} nodes..."
-      success, failures, out = handle_results nodes.map { |node| ridley.node.run(node.public_hostname, command) }
+      success, failures, out = handle_results nodes.map { |node| ridley.node.run(node.chef_attributes['ipaddress'], command) }
 
       unless success.empty?
         say "Successfully executed command on #{success.length} nodes"
@@ -176,7 +176,7 @@ module Berkflow
       end
 
       say "Running Chef Client on #{nodes.length} nodes..."
-      success, failures, out = handle_results nodes.map { |node| ridley.node.chef_run(node.public_hostname) }
+      success, failures, out = handle_results nodes.map { |node| ridley.node.chef_run(node.chef_attributes['ipaddress']) }
 
       unless success.empty?
         say "Successfully ran Chef Client on #{success.length} nodes"
